@@ -16,6 +16,26 @@ class App extends Component {
 		editItem: false
 	};
 
+	handleChange = e => {
+		console.log("handle change");
+	};
+
+	handleSubmit = e => {
+		console.log("handle submit");
+	};
+
+	clearList = () => {
+		console.log("clear list");
+	};
+
+	handleDelete = id => {
+		console.log(`handle delete ${id}`);
+	};
+
+	handleEdit = id => {
+		console.log(`handle edit ${id}`);
+	};
+
 	render() {
 		return (
 			<div className='App'>
