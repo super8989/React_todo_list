@@ -6,15 +6,16 @@ import TodoList from "./components/TodoList";
 import uuid from "uuid";
 
 class App extends Component {
-	state = {
-		items: [
-			{ id: 1, title: "wake up" },
-			{ id: 2, title: "make breakfast" }
-		],
-		id: uuid(),
-		item: "",
-		editItem: false
-	};
+	constructor(props) {
+		super(props);
+		const savedItems = JSON.parse(window.localStorage.getItem("items"));
+		this.state = {
+			items: savedItems || [{ id: 1, title: "Create a list!" }],
+			id: uuid(),
+			item: "",
+			editItem: false
+		};
+	}
 
 	handleChange = e => {
 		this.setState({
@@ -31,38 +32,54 @@ class App extends Component {
 		};
 
 		const updatedItems = [...this.state.items, newItem];
-		this.setState({
-			items: updatedItems,
-			item: "",
-			id: uuid(),
-			editItem: false
-		});
+		this.setState(
+			{
+				items: updatedItems,
+				item: "",
+				id: uuid(),
+				editItem: false
+			},
+			this.syncLocalStorage
+		);
 	};
 
 	clearList = () => {
-		this.setState({
-			items: []
-		});
+		this.setState(
+			{
+				items: []
+			},
+			this.syncLocalStorage
+		);
 	};
 
 	handleDelete = id => {
 		const filteredItems = this.state.items.filter(item => item.id !== id);
 
-		this.setState({
-			items: filteredItems
-		});
+		this.setState(
+			{
+				items: filteredItems
+			},
+			this.syncLocalStorage
+		);
 	};
 
 	handleEdit = id => {
 		const filteredItems = this.state.items.filter(item => item.id !== id);
 		const selectedItem = this.state.items.find(item => item.id === id);
-		this.setState({
-			items: filteredItems,
-			item: selectedItem.title,
-			id: id,
-			editItem: true
-		});
+		this.setState(
+			{
+				items: filteredItems,
+				item: selectedItem.title,
+				id: id,
+				editItem: true
+			},
+			this.syncLocalStorage
+		);
 	};
+
+	syncLocalStorage() {
+		window.localStorage.setItem("items", JSON.stringify(this.state.items));
+	}
 
 	render() {
 		return (
