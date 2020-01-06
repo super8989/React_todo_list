@@ -1,10 +1,13 @@
 import React, { Component } from "react";
 
+import TodoItem from "./TodoItem";
+
 class TodoList extends Component {
 	render() {
 		return (
 			<div>
-				<h1>hello TodoList</h1>
+				<h2>Todo List</h2>
+				<TodoItem />
 			</div>
 		);
 	}

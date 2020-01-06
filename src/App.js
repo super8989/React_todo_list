@@ -1,11 +1,29 @@
-import React from "react";
+import React, { Component } from "react";
 
-function App() {
-	return (
-		<div className='App'>
-			<h1>hello App</h1>
-		</div>
-	);
+import TodoInput from "./components/TodoInput";
+import TodoList from "./components/TodoList";
+
+import uuid from "uuid";
+
+class App extends Component {
+	state = {
+		items: [
+			{ id: 1, title: "wake up" },
+			{ id: 2, title: "make breakfast" }
+		],
+		id: uuid(),
+		item: "",
+		editItem: false
+	};
+
+	render() {
+		return (
+			<div className='App'>
+				<TodoInput />
+				<TodoList />
+			</div>
+		);
+	}
 }
 
 export default App;
